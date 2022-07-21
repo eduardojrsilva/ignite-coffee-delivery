@@ -4,12 +4,13 @@ import styled from 'styled-components';
 import IntroBackground from '../../assets/intro-background.svg';
 
 export const IntroContainer = styled.div`
-  margin-top: ${convertPixelToRem(90)};
+  margin: ${convertPixelToRem(90)} 0;
   background-image: url(${IntroBackground});
 `;
 
 export const Wrapper = styled.div`
   display: flex;
+  justify-content: space-between;
   gap: ${convertPixelToRem(50)};
   max-width: 80%;
   margin: 0 auto;
