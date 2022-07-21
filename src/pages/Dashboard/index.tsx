@@ -1,5 +1,11 @@
+import PageWrapper from '../../components/PageWrapper';
+
 const Dashboard: React.FC = () => {
-  return <h1>Hello World!</h1>;
+  return (
+    <PageWrapper hasIntro>
+      <h1>Home</h1>
+    </PageWrapper>
+  );
 };
 
 export default Dashboard;

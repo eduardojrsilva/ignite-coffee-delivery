@@ -1,16 +1,18 @@
 import { MapPin, ShoppingCart } from 'phosphor-react';
 
 import { ReactComponent as LogoIcon } from '../../assets/logo.svg';
+import Intro from '../Intro';
 
 import { Header, Wrapper } from './styles';
 
 interface PageWrapperProps {
   children: React.ReactNode;
+  hasIntro?: boolean;
 }
 
-const PageWrapper: React.FC<PageWrapperProps> = ({ children }) => {
+const PageWrapper: React.FC<PageWrapperProps> = ({ children, hasIntro = false }) => {
   return (
-    <Wrapper>
+    <>
       <Header>
         <LogoIcon />
 
@@ -26,8 +28,10 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ children }) => {
         </div>
       </Header>
 
-      {children}
-    </Wrapper>
+      {hasIntro && <Intro />}
+
+      <Wrapper>{children}</Wrapper>
+    </>
   );
 };
 
