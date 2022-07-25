@@ -6,6 +6,7 @@ import PageWrapper from '../../components/PageWrapper';
 import { COFFEES } from '../../models/coffee';
 
 import { BuyContainer, Categories, CoffeCardContainer, CoffeesContainer, Title } from './styles';
+import Counter from '../../components/Counter';
 
 interface CoffeeAmount {
   [key: string]: number;
@@ -56,15 +57,12 @@ const Dashboard: React.FC = () => {
                 }).format(coffee.price)}
               </span>
 
-              <div>
-                <button type="button" onClick={() => handleMinusClick(coffee.id)}>
-                  −
-                </button>
-                <span>{amount[coffee.id]}</span>
-                <button type="button" onClick={() => handlePlusClick(coffee.id)}>
-                  +
-                </button>
-              </div>
+              <Counter
+                amount={amount[coffee.id]}
+                coffeeId={coffee.id}
+                handleMinusClick={handleMinusClick}
+                handlePlusClick={handlePlusClick}
+              />
 
               <button type="button">
                 <ShoppingCart size={22} color="white" />

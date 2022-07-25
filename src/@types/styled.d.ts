@@ -9,11 +9,14 @@ declare module 'styled-components' {
     'purple-500': string;
     'purple-800': string;
     'gray-100': string;
+    'gray-150': string;
     'gray-200': string;
+    'gray-250': string;
     'gray-300': string;
     'gray-500': string;
     title: string;
     subtitle: string;
+    white: string;
   }
 
   interface Fonts {

@@ -1,4 +1,5 @@
 import { MapPin, ShoppingCart } from 'phosphor-react';
+import { Link } from 'react-router-dom';
 
 import { ReactComponent as LogoIcon } from '../../assets/logo.svg';
 import Intro from '../Intro';
@@ -14,7 +15,9 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ children, hasIntro = false })
   return (
     <>
       <Header>
-        <LogoIcon />
+        <Link to="/">
+          <LogoIcon />
+        </Link>
 
         <div>
           <span>
@@ -22,9 +25,9 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ children, hasIntro = false })
             Belo Horizonte, MG
           </span>
 
-          <button type="button">
+          <Link to="/order">
             <ShoppingCart size={22} weight="fill" />
-          </button>
+          </Link>
         </div>
       </Header>
 
