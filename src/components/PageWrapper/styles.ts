@@ -19,7 +19,6 @@ export const Header = styled.header`
     gap: 12px;
 
     span,
-    button,
     a {
       padding: 8px;
       border-radius: 6px;
@@ -39,11 +38,26 @@ export const Header = styled.header`
       }
     }
 
-    button,
     a {
       border: 0;
       background: ${({ theme }) => theme.colors['yellow-100']};
       color: ${({ theme }) => theme.colors['yellow-800']};
+      outline: 0;
+      border: 1px solid transparent;
+
+      :hover,
+      :focus {
+        border: 1px solid ${({ theme }) => theme.colors['yellow-800']};
+      }
+    }
+  }
+
+  > a {
+    outline: 0;
+    border: 1px solid transparent;
+
+    :focus {
+      border: 1px solid ${({ theme }) => theme.colors['purple-500']};
     }
   }
 `;

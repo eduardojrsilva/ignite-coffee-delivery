@@ -66,11 +66,16 @@ export const BuyContainer = styled.div`
     padding: 8px;
     border-radius: 6px;
     background: ${({ theme }) => theme.colors['purple-800']};
-    border: 0;
+    outline: 0;
+    border: 1px solid transparent;
     transition: background-color 0.3s;
 
     :hover {
       background: ${({ theme }) => theme.colors['purple-500']};
+    }
+
+    :focus {
+      border-color: ${({ theme }) => theme.colors['purple-500']};
     }
   }
 `;
