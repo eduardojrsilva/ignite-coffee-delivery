@@ -5,6 +5,7 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  margin-top: ${convertPixelToRem(50)};
 `;
 
 export const Content = styled.div`
