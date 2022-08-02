@@ -25,4 +25,8 @@ export const theme: DefaultTheme = {
   fonts: {
     roboto: 'Roboto, sans-serif',
   },
+
+  gradients: {
+    border: 'linear-gradient(white, white), radial-gradient(circle at top left, #DBAC2C, #8047F8)',
+  },
 };

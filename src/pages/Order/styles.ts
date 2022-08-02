@@ -4,6 +4,7 @@ import {
   getBoxWidthAndHeight,
   noBorderNoOutline,
 } from 'css-blocks-styled-components';
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
@@ -32,23 +33,6 @@ export const Card = styled.div`
   padding: 40px;
   background: ${({ theme }) => theme.colors['gray-100']};
   border-radius: 6px;
-
-  > button {
-    padding: ${convertPixelToRem(12)} ${convertPixelToRem(8)};
-    border-radius: 6px;
-    border: 1px solid transparent;
-    outline: 0;
-    background: ${({ theme }) => theme.colors['yellow-500']};
-    color: ${({ theme }) => theme.colors.white};
-    font-size: ${convertPixelToRem(14)};
-    font-weight: 700;
-    text-transform: uppercase;
-
-    :hover,
-    :focus {
-      border-color: ${({ theme }) => theme.colors['yellow-800']};
-    }
-  }
 `;
 
 export const OrderAddressContainer = styled.div`
@@ -232,8 +216,20 @@ export const PriceContainer = styled.div`
   }
 `;
 
-export const ConfirmButton = styled.button`
-  border-radius: 6px;
+export const ConfirmButton = styled(Link)`
+  ${flex.middle}
   padding: ${convertPixelToRem(12)} ${convertPixelToRem(8)};
+  border-radius: 6px;
+  border: 1px solid transparent;
+  outline: 0;
+  background: ${({ theme }) => theme.colors['yellow-500']};
+  color: ${({ theme }) => theme.colors.white};
+  font-size: ${convertPixelToRem(14)};
+  font-weight: 700;
   text-transform: uppercase;
+
+  :hover,
+  :focus {
+    border-color: ${({ theme }) => theme.colors['yellow-800']};
+  }
 `;

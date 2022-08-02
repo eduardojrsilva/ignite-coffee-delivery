@@ -1,5 +1,6 @@
 import { Bank, CreditCard, CurrencyDollar, MapPinLine, Money, Trash } from 'phosphor-react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Counter from '../../components/Counter';
 
 import PageWrapper from '../../components/PageWrapper';
@@ -10,6 +11,7 @@ import { theme } from '../../styles/theme';
 import {
   Card,
   CoffeeContainer,
+  ConfirmButton,
   Container,
   ContainerHeader,
   Divider,
@@ -161,7 +163,7 @@ const Order: React.FC = () => {
               </div>
             </PriceContainer>
 
-            <button type="button">Confirmar Pedido</button>
+            <ConfirmButton to="/confirmed-order">Confirmar Pedido</ConfirmButton>
           </Card>
         </SelectedCoffeesContainer>
       </Container>

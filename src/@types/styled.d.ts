@@ -23,8 +23,13 @@ declare module 'styled-components' {
     roboto: string;
   }
 
+  interface Gradients {
+    border: string;
+  }
+
   export interface DefaultTheme {
     colors: Colors;
     fonts: Fonts;
+    gradients: Gradients;
   }
 }
