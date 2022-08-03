@@ -1,5 +1,6 @@
-import styled from 'styled-components';
-import { convertPixelToRem } from 'css-blocks-styled-components';
+import { Link } from 'react-router-dom';
+import styled, { css } from 'styled-components';
+import { convertPixelToRem, flex } from 'css-blocks-styled-components';
 
 export const Wrapper = styled.div`
   max-width: 80%;
@@ -37,19 +38,6 @@ export const Header = styled.header`
         color: ${({ theme }) => theme.colors['purple-500']};
       }
     }
-
-    a {
-      border: 0;
-      background: ${({ theme }) => theme.colors['yellow-100']};
-      color: ${({ theme }) => theme.colors['yellow-800']};
-      outline: 0;
-      border: 1px solid transparent;
-
-      :hover,
-      :focus {
-        border: 1px solid ${({ theme }) => theme.colors['yellow-800']};
-      }
-    }
   }
 
   > a {
@@ -59,5 +47,46 @@ export const Header = styled.header`
     :focus {
       border: 1px solid ${({ theme }) => theme.colors['purple-500']};
     }
+  }
+`;
+
+interface CartButtonProps {
+  $amountItems: number;
+}
+
+export const CartButton = styled(Link)<CartButtonProps>`
+  background: ${({ theme }) => theme.colors['yellow-100']};
+  color: ${({ theme }) => theme.colors['yellow-800']};
+  outline: 0;
+  border: 1px solid transparent;
+  position: relative;
+
+  :hover,
+  :focus {
+    border: 1px solid ${({ theme }) => theme.colors['yellow-800']};
+  }
+
+  ::after {
+    ${({ $amountItems }) =>
+      $amountItems
+        ? css`
+            content: '${$amountItems}';
+            position: absolute;
+            top: -3px;
+            right: -3px;
+
+            font-size: ${convertPixelToRem(10)};
+            font-weight: 700;
+            color: ${({ theme }) => theme.colors.white};
+            background: ${({ theme }) => theme.colors['yellow-800']};
+
+            ${flex.middle}
+            border-radius: 50%;
+            width: 15px;
+            height: 15px;
+          `
+        : css`
+            content: '';
+          `}
   }
 `;

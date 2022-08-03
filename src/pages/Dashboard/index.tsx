@@ -2,20 +2,26 @@ import { useState } from 'react';
 import { ShoppingCart } from 'phosphor-react';
 
 import PageWrapper from '../../components/PageWrapper';
+import Counter from '../../components/Counter';
 
-import { COFFEES } from '../../models/coffee';
+import { useCart } from '../../providers/Cart';
+
+import { Coffee, COFFEES } from '../../models/coffee';
 
 import { BuyContainer, Categories, CoffeCardContainer, CoffeesContainer, Title } from './styles';
-import Counter from '../../components/Counter';
 
 interface CoffeeAmount {
   [key: string]: number;
 }
 
 const Dashboard: React.FC = () => {
+  const { items, addItem } = useCart();
+
   const [amount, setAmount] = useState<CoffeeAmount>(
     COFFEES.reduce((acc, { id }) => {
-      return { ...acc, [id]: 0 };
+      const amountCoffee = items.find(({ coffee }) => coffee.id === id)?.amount || 0;
+
+      return { ...acc, [id]: amountCoffee };
     }, {}),
   );
 
@@ -27,6 +33,12 @@ const Dashboard: React.FC = () => {
 
   const handlePlusClick = (coffeeId: string): void => {
     setAmount({ ...amount, [coffeeId]: (amount[coffeeId] += 1) });
+  };
+
+  const handleAddItem = (coffee: Coffee): void => {
+    const amountCoffee = amount[coffee.id];
+
+    addItem({ coffee, amount: amountCoffee });
   };
 
   return (
@@ -64,7 +76,7 @@ const Dashboard: React.FC = () => {
                 handlePlusClick={handlePlusClick}
               />
 
-              <button type="button">
+              <button type="button" onClick={() => handleAddItem(coffee)}>
                 <ShoppingCart size={22} color="white" />
               </button>
             </BuyContainer>

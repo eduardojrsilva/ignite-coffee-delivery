@@ -1,10 +1,9 @@
 import { Bank, CreditCard, CurrencyDollar, MapPinLine, Money, Trash } from 'phosphor-react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Counter from '../../components/Counter';
 
 import PageWrapper from '../../components/PageWrapper';
-import { COFFEES } from '../../models/coffee';
+import Counter from '../../components/Counter';
+
+import { Item, useCart } from '../../providers/Cart';
 
 import { theme } from '../../styles/theme';
 
@@ -23,25 +22,21 @@ import {
   SelectedCoffeesContainer,
 } from './styles';
 
-interface CoffeeAmount {
-  [key: string]: number;
-}
+const DELIVERY_PRICE = 3.5;
 
 const Order: React.FC = () => {
-  const [amount, setAmount] = useState<CoffeeAmount>(
-    COFFEES.reduce((acc, { id }) => {
-      return { ...acc, [id]: 0 };
-    }, {}),
-  );
+  const { items, addItem, removeItem } = useCart();
 
-  const handleMinusClick = (coffeeId: string): void => {
-    if (amount[coffeeId] > 0) {
-      setAmount({ ...amount, [coffeeId]: (amount[coffeeId] -= 1) });
-    }
-  };
+  const totalItemsPrice = items.reduce((acc, item) => {
+    return acc + item.coffee.price * item.amount;
+  }, 0);
 
-  const handlePlusClick = (coffeeId: string): void => {
-    setAmount({ ...amount, [coffeeId]: (amount[coffeeId] += 1) });
+  const totalPrice = totalItemsPrice + DELIVERY_PRICE;
+
+  const handleCounterClick = ({ coffee, amount }: Item, type: 'add' | 'remove'): void => {
+    const amountToSend = type === 'add' ? amount + 1 : amount - 1;
+
+    addItem({ coffee, amount: amountToSend });
   };
 
   return (
@@ -114,52 +109,74 @@ const Order: React.FC = () => {
           <h2>Cafés selecionados</h2>
 
           <Card>
-            <CoffeeContainer>
-              <img src={COFFEES[0].image} alt="" />
+            {items.map((item) => (
+              <>
+                <CoffeeContainer>
+                  <img src={item.coffee.image} alt="" />
 
-              <div>
-                <span>{COFFEES[0].name}</span>
+                  <div>
+                    <span>{item.coffee.name}</span>
 
-                <div>
-                  <Counter
-                    amount={amount[COFFEES[0].id]}
-                    coffeeId={COFFEES[0].id}
-                    handleMinusClick={handleMinusClick}
-                    handlePlusClick={handlePlusClick}
-                  />
+                    <div>
+                      <Counter
+                        amount={item.amount}
+                        coffeeId={item.coffee.id}
+                        handleMinusClick={() => handleCounterClick(item, 'remove')}
+                        handlePlusClick={() => handleCounterClick(item, 'add')}
+                      />
 
-                  <button type="button">
-                    <Trash size={16} color={theme.colors['purple-500']} />
-                    Remover
-                  </button>
-                </div>
-              </div>
+                      <button type="button" onClick={() => removeItem(item.coffee.id)}>
+                        <Trash size={16} color={theme.colors['purple-500']} />
+                        Remover
+                      </button>
+                    </div>
+                  </div>
 
-              <span>
-                {new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                  currencyDisplay: 'symbol',
-                }).format(COFFEES[0].price)}
-              </span>
-            </CoffeeContainer>
+                  <span>
+                    {new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                      currencyDisplay: 'symbol',
+                    }).format(item.coffee.price * item.amount)}
+                  </span>
+                </CoffeeContainer>
 
-            <Divider />
+                <Divider />
+              </>
+            ))}
 
             <PriceContainer>
               <div>
                 <span>Total de itens</span>
-                <h4>R$ 29,70</h4>
+                <h4>
+                  {new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                    currencyDisplay: 'symbol',
+                  }).format(totalItemsPrice)}
+                </h4>
               </div>
 
               <div>
                 <span>Entrega</span>
-                <h4>R$ 3,50</h4>
+                <h4>
+                  {new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                    currencyDisplay: 'symbol',
+                  }).format(DELIVERY_PRICE)}
+                </h4>
               </div>
 
               <div>
                 <strong>Total</strong>
-                <strong>R$ 33,20</strong>
+                <strong>
+                  {new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                    currencyDisplay: 'symbol',
+                  }).format(totalPrice)}
+                </strong>
               </div>
             </PriceContainer>
 
