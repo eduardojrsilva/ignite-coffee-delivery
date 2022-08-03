@@ -5,6 +5,7 @@ import PageWrapper from '../../components/PageWrapper';
 import Counter from '../../components/Counter';
 
 import { useCart } from '../../providers/Cart';
+import { useToast } from '../../providers/Toast';
 
 import { Coffee, COFFEES } from '../../models/coffee';
 
@@ -16,6 +17,7 @@ interface CoffeeAmount {
 
 const Dashboard: React.FC = () => {
   const { items, addItem } = useCart();
+  const { addToast } = useToast();
 
   const [amount, setAmount] = useState<CoffeeAmount>(
     COFFEES.reduce((acc, { id }) => {
@@ -39,6 +41,22 @@ const Dashboard: React.FC = () => {
     const amountCoffee = amount[coffee.id];
 
     addItem({ coffee, amount: amountCoffee });
+
+    if (amountCoffee) {
+      const sufix = amountCoffee > 1 ? 'Foram adicionados' : 'Foi adicionado';
+
+      addToast({
+        title: 'Sucesso',
+        description: `${sufix} ${amountCoffee} ${coffee.name} ao seu carrinho!`,
+        type: 'success',
+      });
+    } else {
+      addToast({
+        title: 'Sucesso',
+        description: `${coffee.name} foi removido do seu carrinho!`,
+        type: 'success',
+      });
+    }
   };
 
   return (
