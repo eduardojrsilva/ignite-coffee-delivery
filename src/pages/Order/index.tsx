@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Bank, CreditCard, CurrencyDollar, MapPinLine, Money, Trash } from 'phosphor-react';
 
 import PageWrapper from '../../components/PageWrapper';
@@ -25,7 +25,10 @@ import {
 
 const DELIVERY_PRICE = 3.5;
 
+type PaymentMethod = 'CREDIT_CARD' | 'DEBIT_CARD' | 'MONEY';
+
 const Order: React.FC = () => {
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('CREDIT_CARD');
   const { items, addItem, removeItem } = useCart();
 
   const totalItemsPrice = items.reduce((acc, item) => {
@@ -38,6 +41,10 @@ const Order: React.FC = () => {
     const amountToSend = type === 'add' ? amount + 1 : amount - 1;
 
     addItem(coffee, amountToSend);
+  };
+
+  const handlePaymentClick = (method: PaymentMethod): void => {
+    setPaymentMethod(method);
   };
 
   return (
@@ -87,17 +94,26 @@ const Order: React.FC = () => {
               </ContainerHeader>
 
               <div>
-                <PaymentMethodButton $active>
+                <PaymentMethodButton
+                  onClick={() => handlePaymentClick('CREDIT_CARD')}
+                  $active={paymentMethod === 'CREDIT_CARD'}
+                >
                   <CreditCard color={theme.colors['purple-500']} />
                   <span>Cartão de Crédito</span>
                 </PaymentMethodButton>
 
-                <PaymentMethodButton>
+                <PaymentMethodButton
+                  onClick={() => handlePaymentClick('DEBIT_CARD')}
+                  $active={paymentMethod === 'DEBIT_CARD'}
+                >
                   <Bank color={theme.colors['purple-500']} />
                   <span>Cartão de Débito</span>
                 </PaymentMethodButton>
 
-                <PaymentMethodButton>
+                <PaymentMethodButton
+                  onClick={() => handlePaymentClick('MONEY')}
+                  $active={paymentMethod === 'MONEY'}
+                >
                   <Money color={theme.colors['purple-500']} />
                   <span>Dinheiro</span>
                 </PaymentMethodButton>
