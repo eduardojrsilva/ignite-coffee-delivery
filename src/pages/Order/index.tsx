@@ -1,3 +1,4 @@
+import React from 'react';
 import { Bank, CreditCard, CurrencyDollar, MapPinLine, Money, Trash } from 'phosphor-react';
 
 import PageWrapper from '../../components/PageWrapper';
@@ -36,7 +37,7 @@ const Order: React.FC = () => {
   const handleCounterClick = ({ coffee, amount }: Item, type: 'add' | 'remove'): void => {
     const amountToSend = type === 'add' ? amount + 1 : amount - 1;
 
-    addItem({ coffee, amount: amountToSend });
+    addItem(coffee, amountToSend);
   };
 
   return (
@@ -110,7 +111,7 @@ const Order: React.FC = () => {
 
           <Card>
             {items.map((item) => (
-              <>
+              <React.Fragment key={item.id}>
                 <CoffeeContainer>
                   <img src={item.coffee.image} alt="" />
 
@@ -142,7 +143,7 @@ const Order: React.FC = () => {
                 </CoffeeContainer>
 
                 <Divider />
-              </>
+              </React.Fragment>
             ))}
 
             <PriceContainer>

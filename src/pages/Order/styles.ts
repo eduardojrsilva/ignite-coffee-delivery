@@ -1,9 +1,4 @@
-import {
-  convertPixelToRem,
-  flex,
-  getBoxWidthAndHeight,
-  noBorderNoOutline,
-} from 'css-blocks-styled-components';
+import { convertPixelToRem, flex, getBoxWidthAndHeight } from 'css-blocks-styled-components';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 

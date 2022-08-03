@@ -1,15 +1,17 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
+import { v4 as uuid } from 'uuid';
 
 import { Coffee } from '../models/coffee';
 
 export interface Item {
+  id: string;
   coffee: Coffee;
   amount: number;
 }
 
 interface CartContextData {
   items: Item[];
-  addItem: (item: Item) => void;
+  addItem: (coffee: Coffee, amount: number) => void;
   removeItem: (id: string) => void;
 }
 
@@ -26,15 +28,17 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     setItems((oldItems) => oldItems.filter((item) => item.coffee.id !== id));
   };
 
-  const addItem = (item: Item): void => {
-    if (item.amount === 0) {
-      removeItem(item.coffee.id);
+  const addItem = (coffee: Coffee, amount: number): void => {
+    if (amount === 0) {
+      removeItem(coffee.id);
       return;
     }
 
-    const index = items.findIndex(({ coffee }) => coffee.id === item.coffee.id);
+    const index = items.findIndex((item) => item.coffee.id === coffee.id);
 
-    const filteredItems = items.filter(({ coffee }) => coffee.id !== item.coffee.id);
+    const filteredItems = items.filter((item) => item.coffee.id !== coffee.id);
+
+    const item = { id: uuid(), coffee, amount };
     filteredItems.splice(index, 0, item);
 
     const newItems = index >= 0 ? filteredItems : [...items, item];

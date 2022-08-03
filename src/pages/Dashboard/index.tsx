@@ -40,7 +40,7 @@ const Dashboard: React.FC = () => {
   const handleAddItem = (coffee: Coffee): void => {
     const amountCoffee = amount[coffee.id];
 
-    addItem({ coffee, amount: amountCoffee });
+    addItem(coffee, amountCoffee);
 
     if (amountCoffee) {
       const sufix = amountCoffee > 1 ? 'Foram adicionados' : 'Foi adicionado';
@@ -70,7 +70,7 @@ const Dashboard: React.FC = () => {
 
             <Categories>
               {coffee.categories.map((category) => (
-                <span>{category}</span>
+                <span key={`${coffee.id} - ${category}`}>{category}</span>
               ))}
             </Categories>
 
